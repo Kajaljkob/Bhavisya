@@ -56,23 +56,22 @@
         }
 
         #loadingBox {
-    margin-top: 25px;
-    font-size: 18px;
-    display: block;  /* or block when shown */
-    padding: 18px 25px;
-    background: #f7f9fc; /* very light neutral blue/gray */
-    border: 1px solid #cbd2d9; /* subtle border */
-    border-radius: 8px;
-    font-weight: 500;
-    color: #1a1a1a;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    max-width: 350px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    animation: fadeIn 0.4s ease;
-}
-
+            margin-top: 25px;
+            font-size: 18px;
+            display: none;
+            padding: 18px 25px;
+            background: #f7f9fc;
+            border: 1px solid #cbd2d9;
+            border-radius: 8px;
+            font-weight: 500;
+            color: #1a1a1a;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            max-width: 350px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            animation: fadeIn 0.4s ease;
+        }
 
         #videoOnlyContainer {
             display: none;
@@ -106,7 +105,7 @@
 
     <div class="container" id="stepContainer">
 
-        <!-- STEP 1: NAME -->
+        <!-- STEP 1 -->
         <div id="step1">
             <h1>Future Predictor</h1>
             <p>Please enter your name:</p>
@@ -114,7 +113,7 @@
             <button onclick="goToStep2()">Next</button>
         </div>
 
-        <!-- STEP 2: DOB -->
+        <!-- STEP 2 -->
         <div id="step2" style="display:none;">
             <h1>Hello!</h1>
             <p>Please enter your date of birth:</p>
@@ -122,7 +121,7 @@
             <button onclick="goToStep3()">Next</button>
         </div>
 
-        <!-- STEP 3: YEAR -->
+        <!-- STEP 3 -->
         <div id="step3" style="display:none;">
             <h1>Future Prediction</h1>
             <p>Select the year you want to explore:</p>
@@ -145,18 +144,16 @@
     <!-- VIDEO ONLY MODE -->
     <div id="videoOnlyContainer">
         <div class="video-wrapper">
-           <video id="prankVideo" autoplay muted playsinline webkit-playsinline>
-    <source src="vedio/2026 (online-video-cutter.com).mp4" type="video/mp4">
-</video>
+
+            <!-- MOBILE AUTOPLAY FIX -->
+            <video id="prankVideo" autoplay muted playsinline webkit-playsinline>
+                <source src="vedio/2026 (online-video-cutter.com).mp4" type="video/mp4">
+            </video>
 
         </div>
     </div>
 
 <script>
-    // ---------------------------
-    // Step Navigation
-    // ---------------------------
-
     function goToStep2() {
         const n = document.getElementById("userName").value.trim();
         if (n === "") {
@@ -176,10 +173,6 @@
         document.getElementById("step2").style.display = "none";
         document.getElementById("step3").style.display = "block";
     }
-
-    // ---------------------------
-    // Prediction Loading Sequence
-    // ---------------------------
 
     const steps = [
         "Loading please wait...",
@@ -211,13 +204,19 @@
                 i++;
                 setTimeout(showNext, 1300);
             } else {
-                // Hide everything
                 container.style.display = "none";
                 loadingBox.style.display = "none";
 
-                // Show video only
+                // Show video and start playing
                 videoOnly.style.display = "flex";
-                document.getElementById("prankVideo").play();
+                const video = document.getElementById("prankVideo");
+
+                video.muted = true; // IMPORTANT for mobile autoplay
+                video.play().catch(() => {
+                    // Fallback for strict mobile browsers
+                    video.muted = true;
+                    video.play();
+                });
             }
         }
 
@@ -227,4 +226,3 @@
 
 </body>
 </html>
-
