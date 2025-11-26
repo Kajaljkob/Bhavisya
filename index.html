@@ -145,7 +145,7 @@
     <!-- VIDEO ONLY MODE -->
     <div id="videoOnlyContainer">
         <div class="video-wrapper">
-            <video id="prankVideo" controls>
+            <video id="prankVideo" controls autoplay>
                 <source src="vedio/2026 (online-video-cutter.com).mp4" type="video/mp4">
             </video>
         </div>
@@ -175,8 +175,10 @@
         document.getElementById("step2").style.display = "none";
         document.getElementById("step3").style.display = "block";
     }
-     
-   
+
+    // ---------------------------
+    // Prediction Loading Sequence
+    // ---------------------------
 
     const steps = [
         "Loading please wait...",
